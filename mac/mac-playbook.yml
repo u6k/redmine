@@ -1,0 +1,30 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  sudo: no
+  vars:
+    homebrew_taps:
+      - homebrew/binary
+      - homebrew/dupes
+      - caskroom/cask
+    homebrew_packages:
+      - { name: rbenv }
+      - { name: ruby-build }
+      - { name: vim }
+      - { name: ansible }
+      - { name: pyenv }
+      - { name: git }
+      - { name: wget }
+    homebrew_cask_packages:
+      - { name: java }
+      - { name: dropbox }
+      - { name: virtualbox }
+      - { name: vagrant }
+      - { name: kobito }
+      - { name: atom }
+      - { name: google-chrome }
+      - { name: adobe-reader }
+      - { name: skype }
+      - { name: slack }
+      - { name: sourcetree }
+      - { name: skitch }
