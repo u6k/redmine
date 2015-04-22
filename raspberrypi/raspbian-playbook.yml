@@ -1,0 +1,148 @@
+- hosts: all
+  remote_user: u6k
+  sudo: yes
+  gather_facts: no
+  vars:
+    - rbenv_root: /usr/local/rbenv
+    - ruby_version: 2.2.0
+  tasks:
+    - name: apt update
+      apt: update_cache=yes
+    - name: apt upgrade
+      apt: upgrade=full
+
+    # ssh setting
+    - name: ssh setting - RSAAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="RSAAuthentication" line="RSAAuthentication yes" state=present
+    - name: ssh setting - PubkeyAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
+      notify: restart sshd
+    - name: ssh setting - PermitRootLogin
+      lineinfile: dest=/etc/ssh/sshd_config regexp="PermitRootLogin" line="PermitRootLogin no" state=present
+      notify: restart sshd
+    - name: ssh setting - RhostsRSAAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="RhostsRSAAuthentication" line="RhostsRSAAuthentication no" state=present
+      notify: restart sshd
+    - name: ssh setting - PasswordAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="PasswordAuthentication" line="PasswordAuthentication no" state=present
+      notify: restart sshd
+    - name: ssh setting - PermitEmptyPasswords
+      lineinfile: dest=/etc/ssh/sshd_config regexp="PermitEmptyPasswords" line="PermitEmptyPasswords no" state=present
+      notify: restart sshd
+    - name: ssh setting - ChallengeResponseAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
+      notify: restart sshd
+
+    # build-essential
+    - name: install build-essential
+      apt: name=build-essential update_cache=yes state=latest
+
+    # Git
+    - name: install git
+      apt: name=git update_cache=yes state=latest
+
+    # PHP
+    - name: install php
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+        - php5
+        - php5-dev
+
+    # JavaSDK
+    - name: install jdk
+      apt: name=openjdk-7-jdk update_cache=yes state=latest
+
+    # Python
+    - name: install python
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+        - python
+        - python-setuptools
+    - name: install pip
+      easy_install: name=pip
+
+    # Ruby
+    - name: download ruby source
+      get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz dest=/usr/local/src/ sha256sum=5ffc0f317e429e6b29d4a98ac521c3ce65481bfd22a8cf845fa02a7b113d9b44
+    - name: unarchive ruby source
+      unarchive: src=/usr/local/src/ruby-2.2.2.tar.gz dest=/usr/local/src/
+    - name: build ruby
+      shell: ./configure && make && sudo make install chdir=/usr/local/src/ruby-2.2.2
+
+    # Apache
+    - name: install apache
+      apt: name=apache2 update_cache=yes state=latest
+
+    # MySQL
+    - name: install mysql
+      apt: name=mysql-server update_cache=yes state=latest
+      with_items:
+        - python-mysqldb
+        - libmysqlclient-dev
+        - libmysqld-dev
+        - libmysql++-dev
+        - mysql-server
+
+    # speedtest
+    - name: install speedtest
+      pip: name=speedtest-cli
+
+    # firewall
+    - name: install ufw
+      apt: name=ufw
+    - name: ufw default DENY
+      command: ufw default DENY
+    - name: ufw allow 80
+      command: ufw allow 80
+    - name: ufw allow 443
+      command: ufw allow 443
+    - name: ufw allow 22
+      command: ufw allow 22
+    - name: ufw --force enable
+      command: ufw --force enable
+    - name: ufw status
+      command: ufw status
+
+    # Zabbix Server and Agent
+    - name: download zabbix source
+      get_url: url=http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.2.9/zabbix-2.2.9.tar.gz?r=http%3A%2F%2Fwww.zabbix.com%2Fdownload.php&ts=1429694510&use_mirror=jaist dest=/usr/local/src/zabbix-2.2.9.tar.gz sha256sum=7c8c319b34beb978e4b7be8c93e084485f93fe028dd9dbc6b674a7498d324439
+    - name: unarchive zabbix source
+      unarchive: src=/usr/local/src/zabbix-2.2.9.tar.gz dest=/usr/local/src/
+    - name: create zabbix group
+      group: name=zabbix
+    - name: create zabbix user
+      user: name=zabbix group=zabbix
+    - name: create zabbix db_user
+      mysql_user: login_host=localhost login_user=root login_password= name=zabbix password=zabbix priv=zabbix.*:ALL
+    - name: create zabbix database
+      mysql_db: login_host=localhost login_user=root login_password= name=zabbix encoding=utf8
+    - name: create zabbix tables
+      shell: mysql -u root zabbix < database/mysql/schema.sql &&
+             mysql -u root zabbix < database/mysql/images.sql &&
+             mysql -u root zabbix < database/mysql/data.sql
+             chdir=/usr/local/src/zabbix-2.2.9/
+    - name: compile zabbix
+      shell: ./configure --enable-server --enable-agent --with-mysql --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2 && make install chdir=/usr/local/src/zabbix-2.2.9/
+
+    # ownCloud
+    - name: register ownCloud repository
+      apt: deb=http://download.opensuse.org/repositories/isv:/ownCloud:/community/Debian_7.0/
+    - name: install owncloud
+      apt: name=owncloud update_cache=yes state=latest
+      notify:
+        - restart httpd
+        - restart mysqld
+
+    # Jenkins
+    - name: register jenkins repository
+      apt: deb=http://pkg.jenkins-ci.org/debian binary/
+    - name: install jenkins
+      apt: name=jenkins update_cache=yes state=latest
+
+  handlers:
+    - name: restart sshd
+      service: name=sshd state=restarted
+    - name: restart httpd
+      service: name=apache2 state=restarted
+    - name: restart mysqld
+      service: name=mysqld state=restarted
