@@ -6,10 +6,22 @@
     - rbenv_root: /usr/local/rbenv
     - ruby_version: 2.2.0
   tasks:
-    - name: apt update
-      apt: update_cache=yes
-    - name: apt upgrade
-      apt: upgrade=full
+    - name: apt update and upgrade
+      apt: update_cache=yes upgrade=full
+
+    #####
+    # Precondition
+    #
+    # - "u6k" user can nopasswd ssh login.
+    #     adduser u6k
+    #     keygen
+    # - "u6k" user can nopasswd sudo.
+    #     visudo
+    ####
+
+    #####
+    # Security
+    #####
 
     # ssh setting
     - name: ssh setting - RSAAuthentication
@@ -32,6 +44,26 @@
     - name: ssh setting - ChallengeResponseAuthentication
       lineinfile: dest=/etc/ssh/sshd_config regexp="ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
       notify: restart sshd
+
+    # firewall
+    - name: install ufw
+      apt: name=ufw
+    - name: ufw default DENY
+      command: ufw default DENY
+    - name: ufw allow 80
+      command: ufw allow 80
+    - name: ufw allow 443
+      command: ufw allow 443
+    - name: ufw allow 22
+      command: ufw allow 22
+    - name: ufw --force enable
+      command: ufw --force enable
+    - name: ufw status
+      command: ufw status
+
+    #####
+    # Development tools
+    #####
 
     # build-essential
     - name: install build-essential
@@ -69,6 +101,10 @@
     - name: build ruby
       shell: ./configure && make && sudo make install chdir=/usr/local/src/ruby-2.2.2
 
+    #####
+    # Middleware
+    #####
+
     # Apache
     - name: install apache
       apt: name=apache2 update_cache=yes state=latest
@@ -82,26 +118,6 @@
         - libmysqld-dev
         - libmysql++-dev
         - mysql-server
-
-    # speedtest
-    - name: install speedtest
-      pip: name=speedtest-cli
-
-    # firewall
-    - name: install ufw
-      apt: name=ufw
-    - name: ufw default DENY
-      command: ufw default DENY
-    - name: ufw allow 80
-      command: ufw allow 80
-    - name: ufw allow 443
-      command: ufw allow 443
-    - name: ufw allow 22
-      command: ufw allow 22
-    - name: ufw --force enable
-      command: ufw --force enable
-    - name: ufw status
-      command: ufw status
 
     # Zabbix Server and Agent
     - name: download zabbix source
@@ -138,6 +154,14 @@
       apt: deb=http://pkg.jenkins-ci.org/debian binary/
     - name: install jenkins
       apt: name=jenkins update_cache=yes state=latest
+
+    #####
+    # Other
+    #####
+
+    # speedtest
+    - name: install speedtest
+      pip: name=speedtest-cli
 
   handlers:
     - name: restart sshd
