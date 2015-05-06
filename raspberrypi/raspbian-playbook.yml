@@ -3,8 +3,7 @@
   sudo: yes
   gather_facts: no
   vars:
-    - rbenv_root: /usr/local/rbenv
-    - ruby_version: 2.2.0
+    - ssh_port: 22
   tasks:
     - name: apt update and upgrade
       apt: update_cache=yes upgrade=full
@@ -54,8 +53,8 @@
       command: ufw allow 80
     - name: ufw allow 443
       command: ufw allow 443
-    - name: ufw allow 22
-      command: ufw allow 22
+    - name: ufw allow ssh
+      command: ufw allow {{ ssh_port }}
     - name: ufw --force enable
       command: ufw --force enable
     - name: ufw status
@@ -120,40 +119,44 @@
         - mysql-server
 
     # Zabbix Server and Agent
-    - name: download zabbix source
-      get_url: url=http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.2.9/zabbix-2.2.9.tar.gz?r=http%3A%2F%2Fwww.zabbix.com%2Fdownload.php&ts=1429694510&use_mirror=jaist dest=/usr/local/src/zabbix-2.2.9.tar.gz sha256sum=7c8c319b34beb978e4b7be8c93e084485f93fe028dd9dbc6b674a7498d324439
-    - name: unarchive zabbix source
-      unarchive: src=/usr/local/src/zabbix-2.2.9.tar.gz dest=/usr/local/src/
-    - name: create zabbix group
-      group: name=zabbix
-    - name: create zabbix user
-      user: name=zabbix group=zabbix
-    - name: create zabbix db_user
-      mysql_user: login_host=localhost login_user=root login_password= name=zabbix password=zabbix priv=zabbix.*:ALL
-    - name: create zabbix database
-      mysql_db: login_host=localhost login_user=root login_password= name=zabbix encoding=utf8
-    - name: create zabbix tables
-      shell: mysql -u root zabbix < database/mysql/schema.sql &&
-             mysql -u root zabbix < database/mysql/images.sql &&
-             mysql -u root zabbix < database/mysql/data.sql
-             chdir=/usr/local/src/zabbix-2.2.9/
-    - name: compile zabbix
-      shell: ./configure --enable-server --enable-agent --with-mysql --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2 && make install chdir=/usr/local/src/zabbix-2.2.9/
+# TODO Install and setup Zabbix Server and Agent
+#    - name: download zabbix source
+#      get_url: url=http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.2.9/zabbix-2.2.9.tar.gz?r=http%3A%2F%2Fwww.zabbix.com%2Fdownload.php&ts=1429694510&use_mirror=jaist dest=/usr/local/src/zabbix-2.2.9.tar.gz sha256sum=7c8c319b34beb978e4b7be8c93e084485f93fe028dd9dbc6b674a7498d324439
+#    - name: unarchive zabbix source
+#      unarchive: src=/usr/local/src/zabbix-2.2.9.tar.gz dest=/usr/local/src/
+#    - name: create zabbix group
+#      group: name=zabbix
+#    - name: create zabbix user
+#      user: name=zabbix group=zabbix
+#    - name: create zabbix db_user
+#      mysql_user: login_host=localhost login_user=root login_password= name=zabbix password=zabbix priv=zabbix.*:ALL
+#    - name: create zabbix database
+#      mysql_db: login_host=localhost login_user=root login_password= name=zabbix encoding=utf8
+#    - name: create zabbix tables
+#      shell: mysql -u root zabbix < database/mysql/schema.sql &&
+#             mysql -u root zabbix < database/mysql/images.sql &&
+#             mysql -u root zabbix < database/mysql/data.sql
+#             chdir=/usr/local/src/zabbix-2.2.9/
+#    - name: compile zabbix
+#      shell: ./configure --enable-server --enable-agent --with-mysql --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2 && make install chdir=/usr/local/src/zabbix-2.2.9/
 
     # ownCloud
-    - name: register ownCloud repository
-      apt: deb=http://download.opensuse.org/repositories/isv:/ownCloud:/community/Debian_7.0/
-    - name: install owncloud
-      apt: name=owncloud update_cache=yes state=latest
-      notify:
-        - restart httpd
-        - restart mysqld
+# TODO Install and setup ownCloud
+#    - name: register ownCloud repository
+#      apt: deb=http://download.opensuse.org/repositories/isv:/ownCloud:/community/Debian_7.0/
+#    - name: install owncloud
+#      apt: name=owncloud update_cache=yes state=latest
+#      notify:
+#        - restart httpd
+#        - restart mysqld
 
     # Jenkins
-    - name: register jenkins repository
-      apt: deb=http://pkg.jenkins-ci.org/debian binary/
-    - name: install jenkins
-      apt: name=jenkins update_cache=yes state=latest
+# TODO Install Jenkins
+#    - name: register jenkins repository
+#      apt: deb=http://pkg.jenkins-ci.org/debian binary/
+#    - name: install jenkins
+#      apt: name=jenkins update_cache=yes state=latest
+# TODO Import job settings
 
     #####
     # Other
