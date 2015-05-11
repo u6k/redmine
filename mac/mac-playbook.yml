@@ -28,3 +28,5 @@
       - { name: slack }
       - { name: sourcetree }
       - { name: skitch }
+      - { name: atom }
+      - { name: iterm2 }
