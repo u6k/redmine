@@ -166,6 +166,10 @@
     - name: install speedtest
       pip: name=speedtest-cli
 
+    # ffmpeg
+    - name: install ffmpeg
+      apt: name=ffmpeg update_cache=yes state=latest
+
   handlers:
     - name: restart sshd
       service: name=sshd state=restarted
