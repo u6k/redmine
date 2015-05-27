@@ -170,6 +170,10 @@
     - name: install ffmpeg
       apt: name=ffmpeg update_cache=yes state=latest
 
+    # screen
+    - name: install screen
+      apt: name=screen update_cache=yes state=latest
+
   handlers:
     - name: restart sshd
       service: name=sshd state=restarted
