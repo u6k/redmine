@@ -1,0 +1,121 @@
+- hosts: all
+#  remote_user: root
+  sudo: yes
+  gather_facts: yes
+  vars:
+    - ssh_port: 22
+  tasks:
+    - name: apt update and upgrade
+      apt: update_cache=yes upgrade=full
+
+    #####
+    # Security
+    #####
+
+    # ssh setting
+    - name: ssh setting - RSAAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="RSAAuthentication" line="RSAAuthentication yes" state=present
+    - name: ssh setting - PubkeyAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
+      notify: restart ssh
+    - name: ssh setting - PermitRootLogin
+      lineinfile: dest=/etc/ssh/sshd_config regexp="PermitRootLogin" line="PermitRootLogin no" state=present
+      notify: restart ssh
+    - name: ssh setting - RhostsRSAAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="RhostsRSAAuthentication" line="RhostsRSAAuthentication no" state=present
+      notify: restart ssh
+    - name: ssh setting - PasswordAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="PasswordAuthentication" line="PasswordAuthentication no" state=present
+      notify: restart ssh
+    - name: ssh setting - PermitEmptyPasswords
+      lineinfile: dest=/etc/ssh/sshd_config regexp="PermitEmptyPasswords" line="PermitEmptyPasswords no" state=present
+      notify: restart ssh
+    - name: ssh setting - ChallengeResponseAuthentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
+      notify: restart ssh
+
+    # firewall
+    - name: install ufw
+      apt: name=ufw
+    - name: ufw default DENY
+      command: ufw default DENY
+    - name: ufw allow 80
+      command: ufw allow 80
+    - name: ufw allow 443
+      command: ufw allow 443
+    - name: ufw allow ssh
+      command: ufw allow {{ ssh_port }}
+    - name: ufw --force enable
+      command: ufw --force enable
+    - name: ufw status
+      command: ufw status
+
+    #####
+    # Development tools
+    #####
+
+    # build-essential
+    - name: install build-essential
+      apt: name=build-essential update_cache=yes state=latest
+
+    # Git
+    - name: install git
+      apt: name=git update_cache=yes state=latest
+
+    # Ruby
+    - name: download ruby source
+      get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz dest=/usr/local/src/
+    - name: unarchive ruby source
+      unarchive: src=/usr/local/src/ruby-2.2.2.tar.gz dest=/usr/local/src/ copy=no
+    - name: configure ruby
+      command: ./configure chdir=/usr/local/src/ruby-2.2.2
+    - name: make ruby
+      command: make chdir=/usr/local/src/ruby-2.2.2
+    - name: make test ruby
+      command: make test chdir=/usr/local/src/ruby-2.2.2
+    - name: make install ruby
+      command: make install chdir=/usr/local/src/ruby-2.2.2
+    - name: reset rvm
+      command: /usr/local/rvm/bin/rvm reset
+
+    #####
+    # Middleware
+    #####
+
+    # Apache
+    - name: install apache
+      apt: name=apache2 update_cache=yes state=latest
+
+    # MySQL
+    - name: install mysql
+      apt: name=mysql-server update_cache=yes state=latest
+
+    #####
+    # Redmine
+    #####
+
+    - name: install bundler
+      gem: name=bundler
+    - name: download redmine
+      get_url: url=http://www.redmine.org/releases/redmine-3.1.0.tar.gz dest=/usr/local/src/
+    - name: unarchive redmine
+      unarchive: src=/usr/local/src/redmine-3.1.0.tar.gz dest=/opt/ copy=no
+
+    #####
+    # Other
+    #####
+
+    # screen
+    - name: install screen
+      apt: name=screen update_cache=yes state=latest
+
+    # TODO timezone
+    # TODO npt
+
+  handlers:
+    - name: restart ssh
+      service: name=ssh state=restarted
+    - name: restart httpd
+      service: name=apache2 state=restarted
+    - name: restart mysqld
+      service: name=mysqld state=restarted
