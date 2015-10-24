@@ -1,0 +1,35 @@
+# build-essential
+- name: install build-essential
+  apt: name=build-essential update_cache=yes state=latest
+
+# Git
+- name: install git
+  apt: name=git update_cache=yes state=latest
+
+# PHP
+- name: install php
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - php5
+    - php5-dev
+
+# JavaSDK
+- name: install jdk
+  apt: name=openjdk-7-jdk update_cache=yes state=latest
+
+# Python
+- name: install python
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - python
+    - python-setuptools
+- name: install pip
+  easy_install: name=pip
+
+# Ruby
+- name: download ruby source
+  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz dest=/usr/local/src/ sha256sum=5ffc0f317e429e6b29d4a98ac521c3ce65481bfd22a8cf845fa02a7b113d9b44 timeout=300
+- name: unarchive ruby source
+  unarchive: src=/usr/local/src/ruby-2.2.2.tar.gz dest=/usr/local/src/ copy=no
+- name: build ruby
+  shell: ./configure && make && sudo make install chdir=/usr/local/src/ruby-2.2.2

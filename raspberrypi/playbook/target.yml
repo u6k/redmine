@@ -1,0 +1,9 @@
+- hosts: target
+  sudo: yes
+  roles:
+    - common
+    - ufw
+    - devtool
+    - ffmpeg
+    - apache
+    - mysql
