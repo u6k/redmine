@@ -23,3 +23,7 @@
 - name: ssh setting - ChallengeResponseAuthentication
   lineinfile: dest=/etc/ssh/sshd_config regexp="ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
   notify: restart sshd
+
+# build-essential
+- name: install build-essential
+  apt: name=build-essential update_cache=yes state=latest

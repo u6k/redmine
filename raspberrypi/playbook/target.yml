@@ -3,7 +3,9 @@
   roles:
     - common
     - ufw
-    - devtool
+    - git
+    - php5
+    - jdk7
     - ffmpeg
     - apache
     - mysql
