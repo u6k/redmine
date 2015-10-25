@@ -26,3 +26,9 @@ Vagrantfileがあり、provisionの設定をしてあるので、`vagrant up`で
 ```
 vagrant up
 ```
+
+# 参考
+
+- [Best Practices — Ansible Documentation](http://docs.ansible.com/ansible/playbooks_best_practices.html)
+- [AnsibleをBest Practicesのディレクトリ構成にする - Qiita](http://qiita.com/vectorxenon/items/5609f7a23abbafa4ea08)
+- [Ansible オレオレベストプラクティス - Qiita](http://qiita.com/yteraoka/items/5ed2bddefff32e1b9faf)
