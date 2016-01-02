@@ -26,6 +26,14 @@
       - { name: sourcetree }
       - { name: skitch }
       - { name: atom }
+      - { name: dockertoolbox }
+      - { name: flash-player }
+      - { name: google-japanese-ime }
+      - { name: appcleaner }
+      - { name: onyx }
+      - { name: eclipse-java }
+      - { name: astah-community }
+      - { name: diskwave }
   tasks:
     - name: install taps of homebrew
       homebrew_tap: tap="{{ item }}" state=present
