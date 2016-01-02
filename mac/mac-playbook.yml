@@ -11,7 +11,6 @@
       - { name: rbenv }
       - { name: ruby-build }
       - { name: vim }
-      - { name: ansible }
       - { name: pyenv }
       - { name: git }
       - { name: wget }
@@ -20,16 +19,13 @@
       - { name: dropbox }
       - { name: virtualbox }
       - { name: vagrant }
-      - { name: kobito }
       - { name: atom }
       - { name: google-chrome }
       - { name: adobe-reader }
       - { name: skype }
-      - { name: slack }
       - { name: sourcetree }
       - { name: skitch }
       - { name: atom }
-      - { name: iterm2 }
   tasks:
     - name: install taps of homebrew
       homebrew_tap: tap="{{ item }}" state=present
