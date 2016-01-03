@@ -14,6 +14,7 @@
       - { name: pyenv }
       - { name: git }
       - { name: wget }
+      - { name: maven }
     homebrew_cask_packages:
       - { name: java }
       - { name: dropbox }
@@ -34,6 +35,7 @@
       - { name: eclipse-java }
       - { name: astah-community }
       - { name: diskwave }
+      - { name: bettertouchtool }
   tasks:
     - name: install taps of homebrew
       homebrew_tap: tap="{{ item }}" state=present
