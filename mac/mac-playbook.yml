@@ -16,6 +16,7 @@
       - { name: wget }
       - { name: maven }
       - { name: md5sha1sum }
+      - { name: p7zip }
     homebrew_cask_packages:
       - { name: java }
       - { name: dropbox }
