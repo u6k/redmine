@@ -15,6 +15,7 @@
       - { name: git }
       - { name: wget }
       - { name: maven }
+      - { name: md5sha1sum }
     homebrew_cask_packages:
       - { name: java }
       - { name: dropbox }
