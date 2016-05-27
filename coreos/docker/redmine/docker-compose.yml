@@ -1,0 +1,20 @@
+redmine-mysql:
+  image: u6kapps/redmine-mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=secret
+    - MYSQL_DATABASE=redmine
+  volumes:
+    - /srv/docker/redmine/mysql:/var/lib/mysql
+  restart: always
+
+redmine:
+  image: redmine
+  environment:
+    - VIRTUAL_HOST=redmine.u6k.me
+    - VIRTUAL_PORT=3000
+    - LETSENCRYPT_HOST=redmine.u6k.me
+    - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
+  links:
+    - redmine-mysql:mysql
+  restart: always
+
