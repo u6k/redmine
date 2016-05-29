@@ -19,6 +19,13 @@ coreos:
         Type=oneshot
         RemainAfterExit=yes
         ExecStart=/usr/bin/ln -sf ../usr/share/zoneinfo/Japan /etc/localtime
+    - name: mnt-data.mount
+      command: start
+      content: |
+        [Mount]
+        What=/dev/disk/by-uuid/5384dc84-1c48-459f-b337-c5839a76162f
+        Where=/mnt/data
+        Type=ext4
 
 users:
   - name: u6k
