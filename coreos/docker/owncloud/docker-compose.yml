@@ -1,3 +1,14 @@
+owncloud-mysql:
+  image: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root_pass
+    - MYSQL_DATABASE=owncloud_db
+    - MYSQL_USER=owncloud_user
+    - MYSQL_PASSWORD=owncloud_pass
+  volumes:
+    - /mnt/data/docker/owncloud/mysql:/var/lib/mysql
+  restart: always
+
 owncloud:
   image: owncloud
   environment:
@@ -5,4 +16,8 @@ owncloud:
     - VIRTUAL_PORT=80
     - LETSENCRYPT_HOST=owncloud.u6k.me
     - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
+  volumes:
+    - /mnt/data/docker/owncloud/owncloud:/var/www/html
+  links:
+    - owncloud-mysql:mysql
   restart: always
