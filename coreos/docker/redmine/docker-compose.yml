@@ -8,8 +8,6 @@ services:
       - MYSQL_DATABASE=redmine
     volumes:
       - /srv/docker/redmine/mysql:/var/lib/mysql
-    networks:
-      - redmine
     restart: always
   redmine:
     image: redmine
@@ -20,7 +18,9 @@ services:
       - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
     links:
       - redmine-mysql:mysql
-    networks:
-      - front
-      - redmine
     restart: always
+
+networks:
+  default:
+    external:
+      name: front

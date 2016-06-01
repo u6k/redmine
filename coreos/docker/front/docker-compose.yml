@@ -24,3 +24,7 @@ services:
     networks:
       - front
     restart: always
+
+networks:
+  front:
+    driver: bridge
