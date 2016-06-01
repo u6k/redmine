@@ -10,6 +10,8 @@ services:
       - MYSQL_PASSWORD=owncloud_pass
     volumes:
       - /mnt/data/docker/owncloud/mysql:/var/lib/mysql
+    networks:
+      - owncloud
     restart: always
   owncloud:
     image: owncloud
@@ -22,4 +24,7 @@ services:
       - /mnt/data/docker/owncloud/owncloud:/var/www/html
     links:
       - owncloud-mysql:mysql
+    networks:
+      - front
+      - owncloud
     restart: always

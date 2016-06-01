@@ -11,6 +11,8 @@ services:
     ports:
       - 80:80
       - 443:443
+    networks:
+      - front
     restart: always
   cert:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -19,4 +21,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     volumes_from:
       - nginx
+    networks:
+      - front
     restart: always

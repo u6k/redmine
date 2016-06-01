@@ -10,11 +10,15 @@ services:
       - DB_EXTENSION=pg_trgm
     volumes:
       - /srv/docker/gitlab/postgresql:/var/lib/postgresql
+    networks:
+      - gitlab
     restart: always
   gitlab-redis:
     image: sameersbn/redis:latest
     volumes:
       - /srv/docker/gitlab/redis:/var/lib/redis
+    networks:
+      - gitlab
     restart: always
   gitlab:
     image: sameersbn/gitlab:8.7.6
@@ -31,5 +35,8 @@ services:
       - VIRTUAL_PORT=80
       - LETSENCRYPT_HOST=gitlab.u6k.me
       - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
+    networks:
+      - front
+      - gitlab
     volumes:
       - /srv/docker/gitlab/gitlab:/home/git/data
