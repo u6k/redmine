@@ -9,12 +9,12 @@ services:
       - DB_PASS=password
       - DB_EXTENSION=pg_trgm
     volumes:
-      - /srv/docker/gitlab/postgresql:/var/lib/postgresql
+      - /mnt/data/docker/gitlab/postgresql:/var/lib/postgresql
     restart: always
   gitlab-redis:
     image: sameersbn/redis:latest
     volumes:
-      - /srv/docker/gitlab/redis:/var/lib/redis
+      - /mnt/data/docker/gitlab/redis:/var/lib/redis
     restart: always
   gitlab:
     image: sameersbn/gitlab:8.7.6
@@ -32,9 +32,9 @@ services:
       - LETSENCRYPT_HOST=gitlab.u6k.me
       - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
     volumes:
-      - /srv/docker/gitlab/gitlab:/home/git/data
+      - /mnt/data/docker/gitlab/gitlab:/home/git/data
 
 networks:
   default:
     external:
-      name: front
+      name: front_default

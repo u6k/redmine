@@ -27,4 +27,4 @@ services:
 networks:
   default:
     external:
-      name: front
+      name: front_default
