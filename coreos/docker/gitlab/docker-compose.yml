@@ -1,38 +1,22 @@
 version: '2'
 
 services:
-  gitlab-postgresql:
-    image: sameersbn/postgresql:9.4-21
-    environment:
-      - DB_NAME=gitlabhq_production
-      - DB_USER=gitlab
-      - DB_PASS=password
-      - DB_EXTENSION=pg_trgm
-    volumes:
-      - /mnt/data/docker/gitlab/postgresql:/var/lib/postgresql
-    restart: always
-  gitlab-redis:
-    image: sameersbn/redis:latest
-    volumes:
-      - /mnt/data/docker/gitlab/redis:/var/lib/redis
-    restart: always
   gitlab:
-    image: sameersbn/gitlab:8.7.6
-    links:
-      - gitlab-postgresql:postgresql
-      - gitlab-redis:redisio
-    ports:
-      - "10022:22"
+    image: gitlab/gitlab-ce:latest
+    hostname: gitlab.u6k.me
+    volumes:
+      - /mnt/data/docker/gitlab/config:/etc/gitlab
+      - /mnt/data/docker/gitlab/logs:/var/log/gitlab
+      - /mnt/data/docker/gitlab/data:/var/opt/gitlab
     environment:
-      - GITLAB_PORT=80
-      - GITLAB_SSH_PORT=10022
-      - GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alpha-numeric-string
       - VIRTUAL_HOST=gitlab.u6k.me
       - VIRTUAL_PORT=80
       - LETSENCRYPT_HOST=gitlab.u6k.me
       - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
-    volumes:
-      - /mnt/data/docker/gitlab/gitlab:/home/git/data
+      - GITLAB_OMNIBUS_CONFIG="external_url 'https://gitlab.u6k.me';"
+#    ports:
+#      - "22:22"
+    restart: always
 
 networks:
   default:
