@@ -19,6 +19,10 @@ services:
       - VIRTUAL_PORT=3000
       - LETSENCRYPT_HOST=redmine.u6k.me
       - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
+      - MYSQL_PORT_3306_TCP=tcp://mysql:3306
+      - MYSQL_ENV_MYSQL_USER=redmine_user
+      - MYSQL_ENV_MYSQL_PASSWORD=redmine_pass
+      - MYSQL_ENV_MYSQL_DATABASE=redmine_db
     volumes:
       - /mnt/data/docker/redmine/data:/usr/src/redmine/files
     links:
