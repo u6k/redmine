@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  jenkins:
+    image: jenkins:1.651.2
+    volumes:
+      - /mnt/data/docker/jenkins:/var/jenkins_home
+    environment:
+      - VIRTUAL_HOST=jenkins.u6k.me
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_HOST=jenkins.u6k.me
+      - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
+    restart: always
+
+networks:
+  default:
+    external:
+      name: front_default
