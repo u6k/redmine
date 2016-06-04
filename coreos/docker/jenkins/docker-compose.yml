@@ -9,7 +9,6 @@ services:
       - /usr/bin/docker:/bin/docker.io
       - /usr/lib/libdevmapper.so.1.02:/usr/lib/libdevmapper.so.1.02
     environment:
-      - JAVA_OPTS="-Duser.timezone=Asia/Tokyo"
       - VIRTUAL_HOST=jenkins.u6k.me
       - VIRTUAL_PORT=8080
       - LETSENCRYPT_HOST=jenkins.u6k.me
