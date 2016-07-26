@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  nginx:
+    build: ./nginx-proxy/
+    volumes:
+      - /mnt/data/docker/front/nginx-proxy/certs:/etc/nginx/certs:ro
+      - /mnt/data/docker/front/nginx-proxy/vhost.d:/etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+  cert:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - /mnt/data/docker/front/nginx-proxy/certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx
+    restart: always
