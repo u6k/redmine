@@ -50,7 +50,7 @@ Chocolateyのパッケージは、バージョンが古かったり削除され�
 
 ## git
 
-システム設定、グローバル設定を行います。
+グローバル設定を行います。
 
 ```
 git config --global user.name "u6k"
