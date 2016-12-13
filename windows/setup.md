@@ -40,7 +40,26 @@ So-netのWebサイトから、カスペルスキー・インターネット・�
 
 Chocolateyを使用します。Chocolateyをインストールして、同フォルダの`packages.config`を実行します。
 
+```
+cinst -y ./packages.config
+```
+
+Chocolateyのパッケージは、バージョンが古かったり削除されていることが多く、全てのアプリケーションがインストールできるとは限りません。インストールに失敗したアプリケーションは、公式Webサイトからインストーラーをダウンロードして、手動インストールします。
+
 # 手動セットアップ手順
+
+## git
+
+グローバル設定を行います。
+
+```
+git config --global user.name "u6k"
+git config --global user.email "u6k.apps@gmail.com"
+
+git config --global core.autocrlf false
+git config --global core.precomposeunicode true
+git config --global core.quotepath false
+```
 
 ## フォント
 
