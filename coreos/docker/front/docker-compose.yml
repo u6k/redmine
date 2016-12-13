@@ -4,19 +4,24 @@ services:
   nginx:
     build: ./nginx-proxy/
     volumes:
-      - /mnt/data/docker/front/nginx-proxy/certs:/etc/nginx/certs:ro
       - /mnt/data/docker/front/nginx-proxy/vhost.d:/etc/nginx/vhost.d
       - /usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/redmine.u6k.me/fullchain1.pem:/etc/nginx/certs/redmine.u6k.me.crt:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/redmine.u6k.me/privkey1.pem:/etc/nginx/certs/redmine.u6k.me.key:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/gitlab.u6k.me/fullchain1.pem:/etc/nginx/certs/gitlab.u6k.me.crt:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/gitlab.u6k.me/privkey1.pem:/etc/nginx/certs/gitlab.u6k.me.key:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/jenkins.u6k.me/fullchain1.pem:/etc/nginx/certs/jenkins.u6k.me.crt:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/jenkins.u6k.me/privkey1.pem:/etc/nginx/certs/jenkins.u6k.me.key:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/owncloud.u6k.me/fullchain1.pem:/etc/nginx/certs/owncloud.u6k.me.crt:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/owncloud.u6k.me/privkey1.pem:/etc/nginx/certs/owncloud.u6k.me.key:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/registry.u6k.me/fullchain1.pem:/etc/nginx/certs/registry.u6k.me.crt:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/registry.u6k.me/privkey1.pem:/etc/nginx/certs/registry.u6k.me.key:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/registry-web.u6k.me/fullchain1.pem:/etc/nginx/certs/registry-web.u6k.me.crt:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/registry-web.u6k.me/privkey1.pem:/etc/nginx/certs/registry-web.u6k.me.key:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/zabbix.u6k.me/fullchain1.pem:/etc/nginx/certs/zabbix.u6k.me.crt:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/zabbix.u6k.me/privkey1.pem:/etc/nginx/certs/zabbix.u6k.me.key:ro
     ports:
       - "80:80"
       - "443:443"
-    restart: always
-  cert:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    volumes:
-      - /mnt/data/docker/front/nginx-proxy/certs:/etc/nginx/certs:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    volumes_from:
-      - nginx
     restart: always
