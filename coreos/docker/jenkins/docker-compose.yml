@@ -11,8 +11,6 @@ services:
     environment:
       - VIRTUAL_HOST=jenkins.u6k.me
       - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=jenkins.u6k.me
-      - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
     restart: always
 
 networks:

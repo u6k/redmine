@@ -11,8 +11,6 @@ services:
     environment:
       - VIRTUAL_HOST=gitlab.u6k.me
       - VIRTUAL_PORT=80
-      - LETSENCRYPT_HOST=gitlab.u6k.me
-      - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
       - GITLAB_OMNIBUS_CONFIG="external_url 'https://gitlab.u6k.me';"
 #    ports:
 #      - "22:22"
