@@ -22,6 +22,8 @@ services:
       - /mnt/data/docker/letsencrypt/certs/archive/registry-web.u6k.me/privkey1.pem:/etc/nginx/certs/registry-web.u6k.me.key:ro
       - /mnt/data/docker/letsencrypt/certs/archive/zabbix.u6k.me/fullchain1.pem:/etc/nginx/certs/zabbix.u6k.me.crt:ro
       - /mnt/data/docker/letsencrypt/certs/archive/zabbix.u6k.me/privkey1.pem:/etc/nginx/certs/zabbix.u6k.me.key:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/rutorrent.u6k.me/fullchain1.pem:/etc/nginx/certs/rutorrent.u6k.me.crt:ro
+      - /mnt/data/docker/letsencrypt/certs/archive/rutorrent.u6k.me/privkey1.pem:/etc/nginx/certs/rutorrent.u6k.me.key:ro
     ports:
       - "80:80"
       - "443:443"
