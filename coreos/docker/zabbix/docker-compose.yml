@@ -18,20 +18,12 @@ services:
       - ZS_DBPassword=zabbix_pass
       - VIRTUAL_HOST=zabbix.u6k.me
       - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=zabbix.u6k.me
+      - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
     volumes:
       - /etc/localtime:/etc/localtime:ro
     links:
       - zabbix-db:zabbix.db
-    restart: always
-  zabbix-docker-monitoring:
-    image: monitoringartist/zabbix-agent-xxl-limited:latest
-    hostname: zabbix-docker-monitoring.local
-    environment:
-      - ZA_Server=zabbix-server
-    volumes:
-      - /:/rootfs
-    links:
-      - zabbix-server:zabbix-server
     restart: always
 
 networks:
