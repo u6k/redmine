@@ -18,6 +18,8 @@ services:
       - ZS_DBPassword=zabbix_pass
       - VIRTUAL_HOST=zabbix.u6k.me
       - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=zabbix.u6k.me
+      - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
     volumes:
       - /etc/localtime:/etc/localtime:ro
     links:

@@ -16,6 +16,8 @@ services:
     environment:
       - VIRTUAL_HOST=owncloud.u6k.me
       - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=owncloud.u6k.me
+      - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
     volumes:
       - /mnt/data/docker/owncloud/owncloud:/var/www/html
     links:
