@@ -25,16 +25,6 @@ services:
     links:
       - zabbix-db:zabbix.db
     restart: always
-  zabbix-docker-monitoring:
-    image: monitoringartist/zabbix-agent-xxl-limited:latest
-    hostname: zabbix-docker-monitoring.local
-    environment:
-      - ZA_Server=zabbix-server
-    volumes:
-      - /:/rootfs
-    links:
-      - zabbix-server:zabbix-server
-    restart: always
 
 networks:
   default:
