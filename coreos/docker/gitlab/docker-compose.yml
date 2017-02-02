@@ -8,8 +8,8 @@ services:
       - /mnt/data/docker/gitlab/config:/etc/gitlab
       - /mnt/data/docker/gitlab/logs:/var/log/gitlab
       - /mnt/data/docker/gitlab/data:/var/opt/gitlab
-      - /mnt/data/docker/letsencrypt/certs/archive/gitlab.u6k.me/fullchain1.pem:/etc/gitlab/ssl/gitlab.u6k.me.crt
-      - /mnt/data/docker/letsencrypt/certs/archive/gitlab.u6k.me/privkey1.pem:/etc/gitlab/ssl/gitlab.u6k.me.key
+      - /mnt/data/docker/front/nginx-proxy/certs/gitlab.u6k.me.crt:/etc/gitlab/ssl/gitlab.u6k.me.crt
+      - /mnt/data/docker/front/nginx-proxy/certs/gitlab.u6k.me.key:/etc/gitlab/ssl/gitlab.u6k.me.key
     environment:
       - VIRTUAL_HOST=gitlab.u6k.me
       - VIRTUAL_PORT=443
@@ -37,8 +37,8 @@ services:
       - LETSENCRYPT_EMAIL=u6k.apps@gmail.com
     volumes:
       - /mnt/data/docker/registry/data:/var/lib/registry
-      - /mnt/data/docker/letsencrypt/certs/archive/registry.u6k.me/fullchain1.pem:/certs/registry.u6k.me.crt:ro
-      - /mnt/data/docker/letsencrypt/certs/archive/registry.u6k.me/privkey1.pem:/certs/registry.u6k.me.key:ro
+      - /mnt/data/docker/front/nginx-proxy/certs/gitlab.u6k.me.crt:/certs/registry.u6k.me.crt:ro
+      - /mnt/data/docker/front/nginx-proxy/certs/gitlab.u6k.me.key:/certs/registry.u6k.me.key:ro
     restart: always
   registry-frontend:
     image: konradkleine/docker-registry-frontend:v2
