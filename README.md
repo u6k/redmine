@@ -31,7 +31,7 @@ $ docker pull u6kapps/redmine
 $ docker run -d \
     --name redmine-mysql \
     -v $HOME/docker/redmine/mysql:/var/lib/mysql \
-    -e MYSQL_ROOT_PASSWORD=root_pass \
+    -e MYSQL_ROOT_PASSWORD=secret \
     -e MYSQL_DATABASE=redmine \
     u6kapps/redmine-mysql
 $ docker run -d \
