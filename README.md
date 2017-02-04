@@ -18,10 +18,10 @@
 
 ```
 # stop container
-$ docker kill redmine-mysql
-$ docker rm redmine-mysql
-$ docker kill redmine
-$ docker rm redmine
+$ docker kill redmine-mysql || true
+$ docker rm redmine-mysql || true
+$ docker kill redmine || true
+$ docker rm redmine || true
 
 # pull image
 $ docker pull u6kapps/redmine-mysql
