@@ -1,0 +1,4 @@
+FROM mysql
+MAINTAINER u6k.apps@gmail.com
+
+COPY redmine-mysql/charset.cnf /etc/mysql/conf.d/charset.cnf
