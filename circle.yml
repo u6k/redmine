@@ -7,6 +7,10 @@ compile:
     override:
         - docker build -t u6kapps/redmine-mysql -f Dockerfile-redmine-mysql .
 
+test:
+    override:
+        - echo test
+
 deployment:
     release:
         branch: master
