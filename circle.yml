@@ -5,7 +5,7 @@ machine:
 
 compile:
     override:
-        - docker build -t u6kapps/redmine-mysql -f redmine-mysql/Dockerfile .
+        - docker build -t u6kapps/redmine-mysql -f Dockerfile-redmine-mysql .
 
 deployment:
     release:
