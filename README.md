@@ -32,17 +32,14 @@ $ docker run -d \
     --name redmine-mysql \
     -v $HOME/docker/redmine/mysql:/var/lib/mysql \
     -e MYSQL_ROOT_PASSWORD=root_pass \
-    -e MYSQL_DATABASE=redmine_db \
-    -e MYSQL_USER=redmine_user \
-    -e MYSQL_PASSWORD=redmine_pass \
+    -e MYSQL_DATABASE=redmine \
     u6kapps/redmine-mysql
 $ docker run -d \
     --name redmine \
+    --link redmine-mysql:db \
     -v $HOME/docker/redmine/attachment-file:/usr/src/redmine/files \
-    -e MYSQL_PORT_3306_TCP=tcp://mysql:3306 \
-    -e MYSQL_ENV_MYSQL_USER=redmine_user \
-    -e MYSQL_ENV_MYSQL_PASSWORD=redmine_pass \
-    -e MYSQL_ENV_MYSQL_DATABASE=redmine_db \
+    -e REDMINE_DB_MYSQL=db \
+    -e REDMINE_DB_PASSWORD=secret \
     -e VIRTUAL_HOST=redmine.u6k.me \
     -e VIRTUAL_PORT=3000 \
     -e LETSENCRYPT_HOST=redmine.u6k.me \
