@@ -17,7 +17,6 @@ deployment:
         commands:
             - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
             # push redmine-mysql
-            - docker tag u6kapps/redmine-mysql u6kapps/redmine-mysql:latest
             - docker push u6kapps/redmine-mysql
             # push redmine
             - docker pull redmine
