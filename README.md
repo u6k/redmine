@@ -1,6 +1,6 @@
 # redmine
 
-TODO: ![Badge Status](https://ci-as-a-service)
+[![CircleCI](https://circleci.com/gh/u6k/redmine.svg?style=svg)](https://circleci.com/gh/u6k/redmine)
 
 `u6k.Redmine`、要するに自分用のRedmineです。
 
