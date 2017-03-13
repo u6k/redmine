@@ -3,10 +3,6 @@ machine:
     services:
         - docker
 
-compile:
-    override:
-        - docker build -t u6kapps/redmine-mysql -f Dockerfile-redmine-mysql .
-
 test:
     override:
         - echo test
@@ -16,8 +12,6 @@ deployment:
         branch: master
         commands:
             - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-            # push redmine-mysql
-            - docker push u6kapps/redmine-mysql
             # push redmine
             - docker pull redmine
             - docker tag redmine u6kapps/redmine:latest

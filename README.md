@@ -18,28 +18,17 @@
 
 ```
 # stop container
-$ docker kill redmine-mysql || true
-$ docker rm redmine-mysql || true
 $ docker kill redmine || true
 $ docker rm redmine || true
 
 # pull image
-$ docker pull u6kapps/redmine-mysql
 $ docker pull u6kapps/redmine
 
 # start container
 $ docker run -d \
-    --name redmine-mysql \
-    -v $HOME/docker/redmine/mysql:/var/lib/mysql \
-    -e MYSQL_ROOT_PASSWORD=secret \
-    -e MYSQL_DATABASE=redmine \
-    u6kapps/redmine-mysql
-$ docker run -d \
     --name redmine \
-    --link redmine-mysql:db \
+    -v $HOME/docker/redmine/sqlite:/usr/src/redmine/sqlite \
     -v $HOME/docker/redmine/attachment-file:/usr/src/redmine/files \
-    -e REDMINE_DB_MYSQL=db \
-    -e REDMINE_DB_PASSWORD=secret \
     -e VIRTUAL_HOST=redmine.u6k.me \
     -e VIRTUAL_PORT=3000 \
     -e LETSENCRYPT_HOST=redmine.u6k.me \
