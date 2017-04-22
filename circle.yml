@@ -3,6 +3,10 @@ machine:
     services:
         - docker
 
+compile:
+    override:
+        - docker build -t u6kapps/redmine .
+
 test:
     override:
         - echo test
@@ -12,7 +16,5 @@ deployment:
         branch: master
         commands:
             - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-            # push redmine
-            - docker pull redmine
-            - docker tag redmine u6kapps/redmine:latest
+            - docker tag u6kapps/redmine u6kapps/redmine:latest
             - docker push u6kapps/redmine
