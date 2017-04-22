@@ -24,3 +24,6 @@ RUN cd /usr/src/ && \
     unzip redmine-theme-gitmike.zip && \
     mv redmine-theme-gitmike-1.1.0 /usr/src/redmine/public/themes/ && \
     rm redmine-theme-gitmike.zip
+
+RUN cd public/themes/ && \
+    git clone git://github.com/farend/redmine_theme_farend_fancy.git farend_fancy
