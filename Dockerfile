@@ -2,7 +2,7 @@ FROM redmine
 MAINTAINER u6k.apps@gmail.com
 
 RUN apt-get update && \
-    apt-get install -y openjdk-7-jre unzip && \
+    apt-get install -y openjdk-7-jre unzip graphviz ttf-kochi-gothic xfonts-intl-japanese xfonts-intl-japanese-big xfonts-kaname && \
     apt-get clean
 
 RUN wget -O /usr/lib/plantuml.jar http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
