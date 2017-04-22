@@ -16,5 +16,4 @@ deployment:
         branch: master
         commands:
             - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-            - docker tag u6kapps/redmine u6kapps/redmine:latest
             - docker push u6kapps/redmine
