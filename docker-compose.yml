@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+    redmine:
+        image: u6kapps/redmine
+        volumes:
+            - "${DOCKER_VOLUMES}/redmine/attachment-file:/usr/src/redmine/files"
+            - "/etc/localtime:/etc/localtime:ro"
+        environment:
+            - "REDMINE_DB_POSTGRES=redmine-db"
+            - "REDMINE_DB_USERNAME=${DOCKER_REDMINE_DB_USERNAME}"
+            - "REDMINE_DB_PASSWORD=${DOCKER_REDMINE_DB_PASSWORD}"
+            - "REDMINE_DB_DATABASE=${DOCKER_REDMINE_DB_DATABASE}"
+            - "VIRTUAL_HOST=redmine.u6k.me"
+            - "VIRTUAL_PORT=3000"
+            - "LETSENCRYPT_HOST=redmine.u6k.me"
+            - "LETSENCRYPT_EMAIL=u6k.apps@gmail.com"
+        depends_on:
+            - redmine-db
+        restart: always
+    redmine-db:
+        image: postgres
+        volumes:
+            - "${DOCKER_VOLUMES}/redmine/db:/var/lib/postgresql/data"
+        environment:
+            - "POSTGRES_USER=${DOCKER_REDMINE_DB_USERNAME}"
+            - "POSTGRES_PASSWORD=${DOCKER_REDMINE_DB_PASSWORD}"
+            - "POSTGRES_DB=${DOCKER_REDMINE_DB_DATABASE}"
+        restart: always
+
+networks:
+    default:
+        external:
+            name: nginxproxy_default
