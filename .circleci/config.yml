@@ -1,7 +1,7 @@
 version: 2
 jobs:
     build:
-        working_directory: /repo
+        working_directory: ~/repo
         docker:
             - image: docker:17.07.0-ce-git
         steps:
@@ -11,18 +11,12 @@ jobs:
                 name: Build docker image
                 command: docker build -t u6kapps/redmine .
             - run:
-                name: display tag
-                command: echo tag ${CIRCLE_TAG}
-            - deploy:
-                filters:
-                    tags:
-                        only: /.*/
                 name: Push docker image
                 command: |
-                    if [ -n "${CIRCLE_TAG}" ]; then
+                    if [ "${CIRCLE_BRANCH}" == "master" ]; then
                         docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASS}
-                        docker tag u6kapps/redmine u6kapps/redmine:${CIRCLE_TAG}
-                        docker push u6kapps/redmine
+                        docker tag u6kapps/redmine u6kapps/redmine:${CIRCLE_SHA1}
+                        docker push u6kapps/redmine:${CIRCLE_SHA1}
                     else
                         echo skip deploy
                     fi
