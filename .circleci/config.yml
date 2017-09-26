@@ -10,7 +10,13 @@ jobs:
             - run:
                 name: Build docker image
                 command: docker build -t u6kapps/redmine .
+            - run:
+                name: display tag
+                command: echo tag ${CIRCLE_TAG}
             - deploy:
+                filters:
+                    tags:
+                        only: /.*/
                 name: Push docker image
                 command: |
                     if [ -n "${CIRCLE_TAG}" ]; then
