@@ -14,10 +14,10 @@ RUN cd /usr/src/redmine/plugins/ && \
     git clone https://github.com/dkd/plantuml.git
 
 RUN cd /usr/src/ && \
-    wget https://github.com/akabekobeko/redmine-theme-minimalflat2/releases/download/v1.2.2/minimalflat2-v1.2.2.zip && \
-    unzip minimalflat2-v1.2.2.zip && \
+    wget https://github.com/akabekobeko/redmine-theme-minimalflat2/releases/download/v1.3.4/minimalflat2-1.3.4.zip && \
+    unzip minimalflat2-1.3.4.zip && \
     mv minimalflat2 /usr/src/redmine/public/themes/ && \
-    rm minimalflat2-v1.2.2.zip
+    rm minimalflat2-1.3.4.zip
 
 RUN cd /usr/src/ && \
     wget -O redmine-theme-gitmike.zip https://github.com/makotokw/redmine-theme-gitmike/archive/v1.1.0.zip && \
