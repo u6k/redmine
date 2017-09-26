@@ -16,7 +16,7 @@ jobs:
                     if [ "${CIRCLE_BRANCH}" == "master" ]; then
                         docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
                         docker tag u6kapps/redmine u6kapps/redmine:${CIRCLE_SHA1}
-                        docker push u6kapps/redmine:${CIRCLE_SHA1}
+                        docker push u6kapps/redmine
                     else
                         echo skip deploy
                     fi
