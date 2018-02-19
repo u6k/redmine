@@ -1,6 +1,6 @@
 # redmine
 
-[![CircleCI](https://img.shields.io/circleci/project/github/u6k/redmine.svg)](https://circleci.com/gh/u6k/redmine) [![license](https://img.shields.io/github/license/u6k/redmine.svg)](https://github.com/u6k/redmine/blob/master/LICENSE) [![GitHub tag](https://img.shields.io/github/tag/u6k/redmine.svg)](https://github.com/u6k/redmine/tags) [![Docker Pulls](https://img.shields.io/docker/pulls/u6kapps/redmine.svg)](https://hub.docker.com/r/u6kapps/redmine/)
+[![Travis](https://img.shields.io/travis/u6k/redmine.svg)](https://travis-ci.org/u6k/redmine) [![GitHub tag](https://img.shields.io/github/tag/u6k/redmine.svg)](https://github.com/u6k/redmine/tags) [![license](https://img.shields.io/github/license/u6k/redmine.svg)](https://github.com/u6k/redmine/blob/master/LICENSE) [![Docker Stars](https://img.shields.io/docker/stars/u6kapps/redmine.svg)](https://hub.docker.com/r/u6kapps/redmine/)
 
 `u6k.Redmine`、要するに自分用のRedmineです。
 
@@ -12,7 +12,7 @@
 
 ## Build
 
-`circle.yml`を参照。
+`.travis.yml`を参照。
 
 ## Installation
 
