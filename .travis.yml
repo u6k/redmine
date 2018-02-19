@@ -1,0 +1,24 @@
+sudo: required
+language: ruby
+
+services:
+    - docker
+
+before_install:
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    - sudo apt-get update
+    - sudo apt-get -y install docker-ce
+
+script:
+    # build
+    - docker build -t u6kapps/redmine .
+
+after_success:
+    - if [ -n "$TRAVIS_TAG" ]; then
+          docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
+          docker tag u6kapps/redmine u6kapps/redmine:$TRAVIS_TAG;
+          docker push u6kapps/redmine;
+      else
+          echo skip docker push;
+      fi
