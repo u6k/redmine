@@ -19,7 +19,7 @@ services:
             - redmine-db
         restart: always
     redmine-db:
-        image: postgres
+        image: postgres:10
         volumes:
             - "${DOCKER_VOLUMES}/redmine/db:/var/lib/postgresql/data"
         environment:
