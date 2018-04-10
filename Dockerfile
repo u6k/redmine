@@ -1,4 +1,4 @@
-FROM redmine
+FROM redmine:3.4.4
 MAINTAINER u6k.apps@gmail.com
 
 RUN apt-get update && \
