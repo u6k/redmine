@@ -27,3 +27,6 @@ RUN cd /usr/src/ && \
 
 RUN cd public/themes/ && \
     git clone git://github.com/farend/redmine_theme_farend_fancy.git farend_fancy
+
+RUN cd /usr/src/redmine/ && \
+    git clone git://github.com/alexbevi/redmine_knowledgebase.git plugins/redmine_knowledgebase
