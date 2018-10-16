@@ -36,3 +36,11 @@ RUN cd public/themes/ && \
 RUN cd /usr/src/redmine/ && \
     git clone git://github.com/alexbevi/redmine_knowledgebase.git plugins/redmine_knowledgebase && \
     bundle install
+
+# Install Wiki Extensions plugin
+RUN cd /usr/src/ && \
+    wget https://github.com/haru/redmine_wiki_extensions/releases/download/0.8.1/redmine_wiki_extensions-0.8.1.zip && \
+    unzip redmine_wiki_extensions-0.8.1.zip && \
+    mv redmine_wiki_extensions /usr/src/redmine/plugins/ && \
+    rm redmine_wiki_extensions-0.8.1.zip
+
