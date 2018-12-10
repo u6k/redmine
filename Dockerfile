@@ -44,3 +44,8 @@ RUN cd /usr/src/ && \
     mv redmine_wiki_extensions /usr/src/redmine/plugins/ && \
     rm redmine_wiki_extensions-0.8.1.zip
 
+# Install Issue checklist plugin
+RUN cd /usr/src/redmine/ && \
+    git clone https://github.com/Restream/redmine_issue_checklist.git plugins/redmine_issue_checklist && \
+    bundle install
+
