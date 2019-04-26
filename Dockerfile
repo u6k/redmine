@@ -1,9 +1,23 @@
-FROM redmine:3.4.4
+FROM redmine:3.4.10
 MAINTAINER u6k.apps@gmail.com
 
 RUN apt-get update && \
-    apt-get install -y openjdk-7-jre unzip graphviz ttf-kochi-gothic xfonts-intl-japanese xfonts-intl-japanese-big xfonts-kaname && \
+    mkdir -p /usr/share/man/man1/ && \
+    apt-get install -y \
+      openjdk-8-jdk \
+      unzip \
+      graphviz \
+      fonts-ipafont \
+      xfonts-intl-japanese \
+      xfonts-intl-japanese-big \
+      xfonts-kaname && \
     apt-get clean
+
+# Setup robots.txt
+RUN { \
+      echo "User-agent: *"; \
+      echo "Disallow: /"; \
+    } | tee /usr/src/redmine/public/robots.txt
 
 # Install PlantUML
 RUN wget -O /usr/lib/plantuml.jar http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
@@ -31,11 +45,6 @@ RUN cd /usr/src/ && \
 # Install Farend Fancy theme
 RUN cd public/themes/ && \
     git clone git://github.com/farend/redmine_theme_farend_fancy.git farend_fancy
-
-# Install Knowledgebase plugin
-RUN cd /usr/src/redmine/ && \
-    git clone git://github.com/alexbevi/redmine_knowledgebase.git plugins/redmine_knowledgebase && \
-    bundle install
 
 # Install Wiki Extensions plugin
 RUN cd /usr/src/ && \
