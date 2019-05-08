@@ -1,4 +1,4 @@
-FROM redmine:3.4.10
+FROM redmine:4.0.3
 MAINTAINER u6k.apps@gmail.com
 
 RUN apt-get update && \
@@ -30,16 +30,16 @@ RUN cd /usr/src/redmine/plugins/ && \
 
 # Install MinimalFlat theme
 RUN cd /usr/src/ && \
-    wget https://github.com/akabekobeko/redmine-theme-minimalflat2/releases/download/v1.3.4/minimalflat2-1.3.4.zip && \
-    unzip minimalflat2-1.3.4.zip && \
+    wget https://github.com/akabekobeko/redmine-theme-minimalflat2/releases/download/v1.5.0/minimalflat2-1.5.0.zip && \
+    unzip minimalflat2-1.5.0.zip && \
     mv minimalflat2 /usr/src/redmine/public/themes/ && \
-    rm minimalflat2-1.3.4.zip
+    rm minimalflat2-1.5.0.zip
 
 # Install Gitmike theme
 RUN cd /usr/src/ && \
-    wget -O redmine-theme-gitmike.zip https://github.com/makotokw/redmine-theme-gitmike/archive/v1.1.0.zip && \
+    wget -O redmine-theme-gitmike.zip https://github.com/makotokw/redmine-theme-gitmike/archive/v1.1.1.zip && \
     unzip redmine-theme-gitmike.zip && \
-    mv redmine-theme-gitmike-1.1.0 /usr/src/redmine/public/themes/ && \
+    mv redmine-theme-gitmike-1.1.1 /usr/src/redmine/public/themes/ && \
     rm redmine-theme-gitmike.zip
 
 # Install Farend Fancy theme
@@ -48,13 +48,7 @@ RUN cd public/themes/ && \
 
 # Install Wiki Extensions plugin
 RUN cd /usr/src/ && \
-    wget https://github.com/haru/redmine_wiki_extensions/releases/download/0.8.1/redmine_wiki_extensions-0.8.1.zip && \
-    unzip redmine_wiki_extensions-0.8.1.zip && \
+    wget https://github.com/haru/redmine_wiki_extensions/releases/download/0.9.0/redmine_wiki_extensions-0.9.0.zip && \
+    unzip redmine_wiki_extensions-0.9.0.zip && \
     mv redmine_wiki_extensions /usr/src/redmine/plugins/ && \
-    rm redmine_wiki_extensions-0.8.1.zip
-
-# Install Issue checklist plugin
-RUN cd /usr/src/redmine/ && \
-    git clone https://github.com/Restream/redmine_issue_checklist.git plugins/redmine_issue_checklist && \
-    bundle install
-
+    rm redmine_wiki_extensions-0.9.0.zip
